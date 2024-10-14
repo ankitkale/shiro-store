@@ -170,7 +170,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Save</button>
+                                    <button type="submit" id="addProductBtn" class="btn btn-primary">Save</button>
                                 </div>
                             </form>
                         </div>
@@ -251,7 +251,7 @@
                                     <img id="imagePreview" src="" alt="Image Preview" width="100"
                                         style="display:none; margin-top: 10px;" />
                                 </div>
-                                <button type="submit" class="btn btn-primary">Update Product</button>
+                                <button type="submit" id="updateProduct" class="btn btn-primary">Update Product</button>
                             </form>
                         </div>
                     </div>
@@ -339,6 +339,8 @@
 
                 var formData = new FormData(this);
 
+                $('#addProductBtn').prop('disabled', true);
+
                 $.ajax({
                     url: "{{ route('store.product') }}",
                     type: "POST",
@@ -359,6 +361,7 @@
 
                             fetchProducts();
                         }
+                $('#addProductBtn').prop('disabled', false);
                     },
                     error: function(xhr) {
                         if (xhr.status === 422) {
@@ -376,6 +379,7 @@
                                 $('.image_err').text(errors.image[0]);
                             }
                         }
+                $('#addProductBtn').prop('disabled', false);
                     }
                 });
             });
@@ -458,6 +462,8 @@
                 var productId = $('#productId').val();
                 var formData = new FormData(this);
 
+                $('#updateProduct').prop('disabled', true);
+
                 $.ajax({
                     url: "/edit-product/" + productId,
                     type: "POST",
@@ -478,6 +484,7 @@
 
                             fetchProducts();
                         }
+                $('#updateProduct').prop('disabled', false);
                     },
                     error: function(xhr) {
                         if (xhr.status === 422) {
@@ -495,6 +502,8 @@
                                 $('.image_err').text(errors.image[0]);
                             }
                         }
+                $('#updateProduct').prop('disabled', false);
+
                     }
                 });
             });
